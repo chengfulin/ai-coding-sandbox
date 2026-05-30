@@ -1,0 +1,32 @@
+# Optional: manage multiple project sandboxes at once.
+#   docker compose --profile project-a up -d
+#   docker compose --profile project-a exec project-a bash
+#
+# Keys come from a sibling .env file (never committed). Each service mounts its
+# own project dir and runs on its own profile so only the one you ask for starts.
+services:
+  project-a:
+    image: ai-sandbox:base
+    container_name: ai-sbx-project-a
+    working_dir: /workspace
+    volumes:
+      - ./projects/project-a:/workspace
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    command: sleep infinity
+    profiles: ["project-a"]
+
+  project-b:
+    image: ai-sandbox:base
+    container_name: ai-sbx-project-b
+    working_dir: /workspace
+    volumes:
+      - ./projects/project-b:/workspace
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    command: sleep infinity
+    profiles: ["project-b"]
