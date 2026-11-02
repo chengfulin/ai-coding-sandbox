@@ -1,5 +1,8 @@
 # AI Coding Sandbox
 
+> [!WARNING]
+> **實驗性質專案（Experimental）**：本專案仍在探索階段，腳本選項、image 結構與登入流程可能隨 CLI 版本變動而調整，不保證向下相容，也未經正式環境驗證。請自行評估風險後使用，建議先在非敏感專案試用。
+
 把 AI coding CLI 的設定、認證流程、skills 一次打包進 Docker image，讓每個專案啟動一個乾淨、可重現、隔離的容器。可選安裝 **Claude Code / Codex / Copilot CLI**（一個或多個組合）。
 
 > 直接執行 `build-sandbox.sh` 和 `run-sandbox.sh`，或使用 `Makefile`。build 後可自行維護 `docker-compose.yml` 管理多專案。設計依據與登入機制實測見 [reference.md](reference.md)。
@@ -35,7 +38,8 @@
 ├── Makefile              # build / shell / detach / rebuild / clean 目標
 ├── docker-compose.yml    # 多專案 profile 管理範本
 ├── motd.sh               # 容器啟動時列出可用 CLI 與版本
-└── .env.example          # 金鑰範本
+├── .env.example          # 金鑰範本
+└── LICENSE               # MIT License
 ```
 
 ---
@@ -174,3 +178,11 @@ docker compose --profile project-b up -d
 ## 團隊共用
 
 base image 可推到私有 registry（ECR / GHCR），團隊 `docker pull` 後直接 `run-sandbox.sh` 使用。
+
+---
+
+## 授權
+
+本專案以 [MIT License](LICENSE) 釋出。本專案僅為實驗用途，依「現狀」提供，不附任何明示或默示擔保；使用者須自行承擔使用風險。
+
+> 注意：image 內安裝的 Claude Code、Codex、Copilot CLI 等第三方工具各自適用其原廠授權與服務條款，不在本專案 MIT 授權範圍內。
